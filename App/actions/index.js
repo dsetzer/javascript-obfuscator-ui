@@ -104,6 +104,16 @@ export const removeReservedName = (name) => ({
     name
 });
 
+export const addForceTransformString = (string) => ({
+    'type': types.ADD_FORCE_TRANSFORM_STRING,
+    string
+});
+
+export const removeForceTransformString = (string) => ({
+    'type': types.REMOVE_FORCE_TRANSFORM_STRING,
+    string
+});
+
 export const addReservedString = (string) => ({
     'type': types.ADD_RESERVED_STRING,
     string
@@ -137,6 +147,16 @@ export const setStringArrayThreshold = (threshold) => ({
 export const setStringArrayEncoding = (encoding) => ({
     'type': types.SET_STRING_ARRAY_ENCODING,
     encoding
+});
+
+export const setStringArrayWrappersCount = (stringArrayWrappersCount) => ({
+    'type': types.SET_STRING_ARRAY_WRAPPERS_COUNT,
+    stringArrayWrappersCount
+});
+
+export const setStringArrayWrappersType = (stringArrayWrappersType) => ({
+    'type': types.SET_STRING_ARRAY_WRAPPERS_TYPE,
+    stringArrayWrappersType
 });
 
 export const setSourceMapMode = (mode) => ({

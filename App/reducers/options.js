@@ -2,13 +2,13 @@ import * as types from '../constants/ActionTypes';
 
 import {
     SOURCEMAP_SEPARATE,
-    SOURCEMAP_OFF,
     OPTIONS_PRESET_DEFAULT,
     IDENTIFIER_NAMES_GENERATOR_HEXADECIMAL,
     TARGET_BROWSER,
     STRING_ARRAY_ENCODING_NONE,
     STRING_ARRAY_ENCODING_BASE64,
-    STRING_ARRAY_ENCODING_RC4
+    STRING_ARRAY_ENCODING_RC4,
+    STRING_ARRAY_WRAPPERS_TYPE_VARIABLE
 } from '../containers/OptionsContainer';
 
 const initialState = {
@@ -44,6 +44,10 @@ const initialState = {
     ],
     stringArrayEncodingEnabled: true,
 
+    stringArrayWrappersCount: 1,
+    stringArrayWrappersChainedCalls: true,
+    stringArrayWrappersType: STRING_ARRAY_WRAPPERS_TYPE_VARIABLE,
+
     numbersToExpressions: false,
 
     sourceMap: false,
@@ -53,6 +57,8 @@ const initialState = {
 
     domainLock: [],
     domainLockEnabled: true,
+
+    forceTransformStrings: [],
     reservedNames: [],
     reservedStrings: [],
 
@@ -202,6 +208,24 @@ export const options = (state = initialState, action) => {
                 stringArrayThreshold: action.threshold
             };
 
+        case types.SET_STRING_ARRAY_WRAPPERS_COUNT:
+            return {
+                ...state,
+                stringArrayWrappersCount: action.stringArrayWrappersCount
+            };
+
+        case types.TOGGLE_STRING_ARRAY_WRAPPERS_CHAINED_CALLS:
+            return {
+                ...state,
+                stringArrayWrappersChainedCalls: !state.stringArrayWrappersChainedCalls
+            };
+
+        case types.SET_STRING_ARRAY_WRAPPERS_TYPE:
+            return {
+                ...state,
+                stringArrayWrappersType: action.stringArrayWrappersType
+            };
+
         case types.TOGGLE_SOURCEMAP: {
             return {
                 ...state,
@@ -262,6 +286,24 @@ export const options = (state = initialState, action) => {
                 ...state,
                 reservedNames: state.reservedNames.filter((name) => name !== action.name),
             };
+
+        case types.ADD_FORCE_TRANSFORM_STRING: {
+            const string = action.string;
+            if (state.forceTransformStrings.indexOf(name) !== -1)
+                return state;
+
+            return {
+                ...state,
+                forceTransformStrings: [...state.forceTransformStrings, string],
+            };
+        }
+
+        case types.REMOVE_FORCE_TRANSFORM_STRING: {
+            return {
+                ...state,
+                forceTransformStrings: state.forceTransformStrings.filter((string) => string !== action.string)
+            };
+        }
 
         case types.ADD_RESERVED_STRING: {
             const string = action.string;
