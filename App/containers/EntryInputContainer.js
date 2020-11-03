@@ -55,6 +55,7 @@ export default class EntryInputContainer extends Component {
                 <Form.Input
                     label={label}
                     onChange={(event) => this.handleOnChange(event.target.value)}
+                    onKeyPress={(event) => { if (e.key === 'Enter' || e.keyCode === 13) { this.handleAdd(event) } }}
                     value={this.state.value}
                     action={{icon: buttonIcon, onClick: this.handleAdd}}
                     placeholder={placeholder}
